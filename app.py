@@ -158,7 +158,7 @@ with st.sidebar:
     # Skill 推广按钮
     st.html(
         '<a href="https://skillhub.cn/skills/etf-selector-expert" target="_blank" class="skill-btn">'
-        '体验 Skill ⚡ <span style="font-size:18px;">→</span></a>'
+        '⚡ 体验 Skill <span style="font-size:18px;">→</span></a>'
     )
 
     st.html('<div style="height:4px;"></div>')
