@@ -6,18 +6,19 @@
 
 ### 已完成的工作：
 
-1. **✅ 修改 `data_layer.py`** — 移除了所有硬编码密钥，改为纯环境变量读取
-2. **✅ 创建 `.env` 文件** — 本地保存密钥，已被 `.gitignore` 保护
+1. **✅ 修改 `data_layer.py`** — 移除了所有硬编码密钥，改为纯环境变量读取，并添加校验逻辑
+2. **✅ 创建 `.env` 文件** — 本地保存密钥，已被 `.gitignore` 保护，不会进入 Git 仓库
 3. **✅ 创建 `.gitignore`** — 阻止 `.env` 和缓存文件进入 Git 仓库
-4. **✅ 修改 `app.py`** — 添加 `python-dotenv` 加载逻辑
+4. **✅ 修改 `app.py`** — 添加 `python-dotenv` 加载逻辑，本地开发自动读取 `.env`
 5. **✅ 更新 `requirements.txt`** — 添加 `python-dotenv>=1.0.0` 依赖
 6. **✅ 初始化全新 Git 仓库** — 确保没有历史密钥泄露
-7. **✅ 提交到本地 Git** — 2 个 commit，均不含密钥
+7. **✅ 提交到本地 Git** — 4 个 commit，均不含密钥
 
 ### 当前 Git 状态：
 - 分支：`master`（本地）
-- Commit 数量：2 个（干净的初始提交）
+- Commit 数量：4 个（干净的提交历史）
 - 远程仓库：**尚未关联**（下一步操作）
+- `.env` 文件：**被 Git 忽略，不会上传**
 
 ---
 
@@ -60,7 +61,7 @@ git push -u origin main
 2. 点击 `data_layer.py` 文件查看内容
 3. ✅ 确认**没有**出现任何密钥值（应该只有 `os.environ.get("IMA_API_KEY")`）
 4. 点击 **Commits** 标签
-5. ✅ 确认只有 2 个 commit，且都**不包含**密钥
+5. ✅ 确认只有 4 个 commit，且都**不包含**密钥
 
 ### 步骤 4：Streamlit Community Cloud 部署
 
