@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 数据层 · data_layer.py
 负责从 ima 知识库拉取 Excel 数据、解析为 DataFrame、缓存
@@ -31,19 +32,19 @@ import pandas as pd
 import numpy as np
 
 # ════════════════════════════════════════════════════════════
-# IMA 配置
+# IMA 配置（从环境变量读取，不再硬编码密钥）
 # ════════════════════════════════════════════════════════════
-# 修改后（✅ 安全）：
 IMA_API_KEY = os.environ.get("IMA_API_KEY")
 IMA_CLIENT_ID = os.environ.get("IMA_CLIENT_ID")
 KNOWLEDGE_BASE_ID = os.environ.get("IMA_KB_ID")
+IMA_BASE_URL = "https://ima.qq.com/openapi/wiki/v1"
 
 # 增加校验，确保密钥已设置
 if not all([IMA_API_KEY, IMA_CLIENT_ID, KNOWLEDGE_BASE_ID]):
     raise ValueError(
-        "缺少 IMA 环境变量！请设置 IMA_API_KEY, IMA_CLIENT_ID, IMA_KB_ID"
+        "缺少 IMA 环境变量！请设置 IMA_API_KEY, IMA_CLIENT_ID, IMA_KB_ID。"
+        "本地开发时请在 .env 文件中配置，部署时请在 Streamlit Secrets 中设置。"
     )
-IMA_BASE_URL = "https://ima.qq.com/openapi/wiki/v1"
 
 CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache")
 os.makedirs(CACHE_DIR, exist_ok=True)
@@ -849,4 +850,3 @@ def build_th_with_tooltip(header, tooltip="", bg_color="#1a1a2e"):
 def get_header_tooltip(header):
     """返回表头对应的 tooltip 文本，若无则返回空字符串。"""
     return _HEADER_TOOLTIPS.get(header, "")
-
