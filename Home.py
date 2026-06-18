@@ -68,7 +68,7 @@ def render_home():
                 📊 市场总览
             </h1>
             <p style="margin:6px 0 0;font-size:12px;color:rgba(255,255,255,0.55);">
-                全市场ETF数据透视 · 行业概念全景 · 智能排行筛选 · 实时关注追踪
+                全市场 ETF 数据透视
             </p>
         </div>
         {badge}

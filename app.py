@@ -140,17 +140,14 @@ pg = st.navigation([home, page_02, page_03, page_04, page_05, page_06])
 
 # ═══ 侧边栏内容（放在 pg.run() 之前，确保所有页面都能渲染） ═══
 with st.sidebar:
-    # 网站醒目标题
+    # 网站醒目标题（居左，与导航项对齐）
     st.markdown(
-        "<div style='text-align:center;padding:12px 0 16px 0;'>"
-        "<h1 style='margin:0;font-size:24px;font-weight:800;color:#1a1a2e;letter-spacing:2px;'>"
+        "<div style='padding:8px 0 12px 0;'>"
+        "<h1 style='margin:0;font-size:22px;font-weight:800;color:#1a1a2e;letter-spacing:1px;'>"
         "ETF 智选专家</h1>"
-        "<div style='height:3px;background:linear-gradient(90deg,#667eea,#764ba2);margin:8px 16px 0;border-radius:2px;'>"
-        "</div></div>",
+        "</div>",
         unsafe_allow_html=True,
     )
-
-    st.html('<div style="height:6px;"></div>')
 
     # 呼吸间距（导航与Skill按钮之间）
     st.html('<div style="height:4px;"></div>')
