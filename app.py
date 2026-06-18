@@ -27,6 +27,18 @@ st.markdown("""
         background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
     }
 
+    /* ═══ 侧边栏顶部标题 - 用 ::before 伪元素注入到导航上方 ═══ */
+    [data-testid="stSidebarNav"]::before {
+        content: "ETF 智选专家";
+        display: block;
+        padding: 16px 18px 12px 18px;
+        font-size: 22px;
+        font-weight: 800;
+        color: #1a1a2e;
+        letter-spacing: 1px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
     /* 主标题栏 */
     .main-header {
         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
@@ -125,18 +137,6 @@ st.markdown("""
         color: white;
         text-decoration: none;
     }
-
-    /* 侧边栏顶部标题 - 通过JS注入 */
-    .sidebar-brand-title {
-        padding: 16px 18px 14px 18px !important;
-    }
-    .sidebar-brand-title h1 {
-        margin: 0 !important;
-        font-size: 22px !important;
-        font-weight: 800 !important;
-        color: #1a1a2e !important;
-        letter-spacing: 1px !important;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -150,47 +150,10 @@ page_06 = st.Page("pages/06_我的关注.py", title="我的关注", icon="⭐")
 
 pg = st.navigation([home, page_02, page_03, page_04, page_05, page_06])
 
-# ═══ 用 JS 将标题注入到侧边栏导航菜单的最上方 ═══
-st.sidebar.html("""
-<script>
-(function() {
-    function injectTitle() {
-        var sidebar = document.querySelector('[data-testid="stSidebar"]');
-        var nav = document.querySelector('[data-testid="stSidebarNav"]');
-        if (!sidebar || !nav) return false;
-
-        // 避免重复注入
-        if (document.getElementById('sidebar-brand-title')) return true;
-
-        // 创建标题元素
-        var titleDiv = document.createElement('div');
-        titleDiv.id = 'sidebar-brand-title';
-        titleDiv.className = 'sidebar-brand-title';
-        titleDiv.innerHTML = '<h1>ETF 智选专家</h1>';
-
-        // 插入到导航菜单之前（即侧边栏内容的第一个子元素）
-        nav.parentNode.insertBefore(titleDiv, nav);
-        return true;
-    }
-
-    // 多次尝试确保渲染后能找到DOM
-    if (!injectTitle()) {
-        var attempts = 0;
-        var timer = setInterval(function() {
-            attempts++;
-            if (injectTitle() || attempts > 20) {
-                clearInterval(timer);
-            }
-        }, 200);
-    }
-})();
-</script>
-""")
-
 # ═══ 侧边栏内容（放在 pg.run() 之前，确保所有页面都能渲染） ═══
 with st.sidebar:
-    # 呼吸间距（导航与Skill按钮之间）
-    st.html('<div style="height:6px;"></div>')
+    # 导航与Skill按钮之间的间距（保持紧凑）
+    st.html('<div style="height:4px;"></div>')
 
     # Skill 推广按钮
     st.html(
