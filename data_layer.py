@@ -124,27 +124,31 @@ def _parse_scale_str(val):
     return num  # 亿保持不变
 
 
-@st.cache_data(ttl=3600, show_spinner="正在从ima知识库同步数据，请稍候...")
 def load_data():
     """
     从 ima 知识库加载两个 Excel 表。
     返回 (table1_df, table2_df, refresh_time)
+
+    缓存策略：仅文件缓存（1小时TTL），不用 st.cache_data。
+    refresh_time 始终反映真实的数据拉取（或缓存写入）时间。
     """
     cache_path_t1 = os.path.join(CACHE_DIR, "table1.parquet")
     cache_path_t2 = os.path.join(CACHE_DIR, "table2.parquet")
+    CACHE_TTL = 3600  # 文件缓存有效期（秒）
 
-    # 尝试缓存
+    # 尝试文件缓存：未过期则直接读取，时间戳 = 缓存文件写入时间（即上次真实拉取时间）
     if os.path.exists(cache_path_t1) and os.path.exists(cache_path_t2):
         t1_mtime = os.path.getmtime(cache_path_t1)
-        if time.time() - t1_mtime < 3600:
+        if time.time() - t1_mtime < CACHE_TTL:
             try:
                 t1 = pd.read_parquet(cache_path_t1)
                 t2 = pd.read_parquet(cache_path_t2)
                 refresh_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t1_mtime))
                 return t1, t2, refresh_time
             except Exception:
-                pass
+                pass  # 缓存损坏，继续走API
 
+    # 缓存过期或不存在 → 真正调用 API 拉取数据
     excel_files = _find_excel_media_ids()
 
     table1, table2 = None, None
@@ -165,7 +169,7 @@ def load_data():
             f"table2={len(table2) if table2 is not None else 'None'} rows"
         )
 
-    # 缓存
+    # 写入文件缓存（此刻的时间 = 真实拉取完成时间）
     try:
         table1.to_parquet(cache_path_t1, index=False)
         table2.to_parquet(cache_path_t2, index=False)
