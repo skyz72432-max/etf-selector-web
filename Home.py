@@ -65,10 +65,10 @@ def render_home():
                 display:flex;justify-content:space-between;align-items:center;">
         <div>
             <h1 style="margin:0;font-size:26px;color:white;font-family:'Microsoft YaHei';letter-spacing:1px;">
-                📊 ETF 智选专家
+                📊 市场总览
             </h1>
             <p style="margin:6px 0 0;font-size:12px;color:rgba(255,255,255,0.55);">
-                数据来源：ima 知识库 &nbsp;·&nbsp; 最近刷新：{last_refresh}
+                全市场ETF数据透视 · 行业概念全景 · 智能排行筛选 · 实时关注追踪
             </p>
         </div>
         {badge}
