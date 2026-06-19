@@ -138,7 +138,7 @@ def render_home():
 
                 # ── 构建 HTML 表格 ──────────────────────────────
                 headers = ["", "ETF代码", "ETF名称", "跟踪指数",
-                    "上市日期", "基金管理人",
+                    "基金管理人", "上市日期",
                     "最新规模(亿)", "日均成交额(亿)", "跟踪误差", "信息比率", "潜在风险"]
 
                 html_parts = ['<table style="width:100%;border-collapse:collapse;font-size:12px;font-family:Microsoft YaHei,sans-serif;">']
@@ -169,8 +169,8 @@ def render_home():
                         ("ETF代码", code_html, ""),
                         ("ETF名称", str(row.get("ETF名称", "")), ""),
                         ("跟踪指数", str(row.get("ETF跟踪指数名称", "")), ""),
-                        ("上市日期", row["ETF上市日期"].strftime("%Y-%m-%d") if pd.notna(row.get("ETF上市日期")) else "", ""),
                         ("基金管理人", str(row.get("ETF基金管理人", "")), ""),
+                        ("上市日期", row["ETF上市日期"].strftime("%Y-%m-%d") if pd.notna(row.get("ETF上市日期")) else "", ""),
                         ("最新规模(亿)", f"{row.get('ETF最新规模_数值', np.nan):.2f}" if pd.notna(row.get('ETF最新规模_数值')) else "", _risk_cell_style("最新规模(亿)", risks)),
                         ("日均成交额(亿)", f"{row.get('ETF日均成交额_数值', np.nan):.2f}" if pd.notna(row.get('ETF日均成交额_数值')) else "", _risk_cell_style("日均成交额(亿)", risks)),
                         ("跟踪误差", f"{row.get('ETF跟踪误差', np.nan):.2f}" if pd.notna(row.get('ETF跟踪误差')) else "", _risk_cell_style("跟踪误差", risks)),
@@ -332,7 +332,7 @@ def render_home():
                 "潜在风险": risk_str,
             })
 
-        new_headers = ["", "ETF代码", "ETF名称", "跟踪指数", "上市日期", "基金管理人", "最新规模(亿)", "日均成交额(亿)", "跟踪误差", "信息比率", "潜在风险"]
+        new_headers = ["", "ETF代码", "ETF名称", "跟踪指数", "基金管理人", "上市日期", "最新规模(亿)", "日均成交额(亿)", "跟踪误差", "信息比率", "潜在风险"]
         html_new = ['<table style="width:100%;border-collapse:collapse;font-size:12px;font-family:Microsoft YaHei,sans-serif;">']
         html_new.append('<thead><tr>')
         for h in new_headers:

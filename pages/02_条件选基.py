@@ -132,9 +132,9 @@ def _risk_cell_style(col_key, risks):
     return ""
 
 # ── 构建 HTML 表格 ──────────────────────────────────────────
-# 列顺序：ETF代码 ETF名称 跟踪指数 上市日期 基金管理人 最新规模(亿) 日均成交额(亿) 跟踪误差 信息比率 潜在风险
-headers = ["", "ETF代码", "ETF名称", "跟踪指数", "上市日期",
-           "基金管理人", "最新规模(亿)", "日均成交额(亿)", "跟踪误差",
+# 列顺序：ETF代码 ETF名称 跟踪指数 基金管理人 上市日期 最新规模(亿) 日均成交额(亿) 跟踪误差 信息比率 潜在风险
+headers = ["", "ETF代码", "ETF名称", "跟踪指数", "基金管理人",
+           "上市日期", "最新规模(亿)", "日均成交额(亿)", "跟踪误差",
            "信息比率", "潜在风险"]
 
 html_parts = ['<table style="width:100%;border-collapse:collapse;font-size:12px;font-family:Microsoft YaHei,sans-serif;">']
@@ -175,8 +175,8 @@ for i, (_, row) in enumerate(display.iterrows()):
         ("ETF代码", code_html, ""),
         ("ETF名称", name, ""),
         ("跟踪指数", idx_name, ""),
-        ("上市日期", date_val, ""),
         ("基金管理人", fund, ""),
+        ("上市日期", date_val, ""),
         ("最新规模(亿)", f"{scale_val:.2f}" if pd.notna(scale_val) else "", _risk_cell_style("最新规模(亿)", risks)),
         ("日均成交额(亿)", f"{vol_val:.2f}" if pd.notna(vol_val) else "", _risk_cell_style("日均成交额(亿)", risks)),
         ("跟踪误差", f"{err_val:.2f}" if pd.notna(err_val) else "", _risk_cell_style("跟踪误差", risks)),

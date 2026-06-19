@@ -51,7 +51,15 @@ pool = st.session_state.compare_pool
 # ════════════════════════════════════════════════════════════
 # 自选池管理
 # ════════════════════════════════════════════════════════════
-st.markdown(f"##### 📋 自选池（{len(pool)} 只 ETF）")
+_col_title, _col_btn = st.columns([8, 2])
+with _col_title:
+    st.markdown(f"##### 📋 自选池（{len(pool)} 只 ETF）")
+with _col_btn:
+    if len(pool) > 0:
+        if st.button("🗑️ 一键清空", key="clear_all_pool", use_container_width=True,
+                     help="清空自选池中所有 ETF"):
+            st.session_state.compare_pool = []
+            st.rerun()
 
 if len(pool) == 0:
     st.info("当前自选池为空，请先在前述页面勾选添加ETF。")
@@ -137,7 +145,7 @@ def _risk_cell_style(col_key, risks):
         return "color:#E74C3C;font-weight:600;"
     return ""
 
-comp_headers = ["ETF代码", "ETF名称", "跟踪指数", "上市日期", "基金管理人",
+comp_headers = ["ETF代码", "ETF名称", "跟踪指数", "基金管理人", "上市日期",
                 "最新规模(亿)", "日均成交额(亿)", "跟踪误差", "信息比率", "潜在风险"]
 
 html_comp = ['<table style="width:100%;border-collapse:collapse;font-size:12px;font-family:Microsoft YaHei,sans-serif;">']
@@ -158,8 +166,8 @@ for i, (_, r) in enumerate(df_detail.iterrows()):
         ("ETF代码", code_html, ""),
         ("ETF名称", str(r.get("ETF名称", "")), ""),
         ("跟踪指数", str(r.get("跟踪指数", "")), ""),
-        ("上市日期", str(r.get("上市日期", "")), ""),
         ("基金管理人", str(r.get("基金管理人", "")), ""),
+        ("上市日期", str(r.get("上市日期", "")), ""),
         ("最新规模(亿)", f"{r['规模']:.2f}" if pd.notna(r.get("规模")) else "—", _risk_cell_style("最新规模(亿)", risks)),
         ("日均成交额(亿)", f"{r['成交额']:.2f}" if pd.notna(r.get("成交额")) else "—", _risk_cell_style("日均成交额(亿)", risks)),
         ("跟踪误差", f"{r['跟踪误差']:.2f}" if pd.notna(r.get("跟踪误差")) else "—", _risk_cell_style("跟踪误差", risks)),
